@@ -29,7 +29,7 @@
 $username = 'hm4rq';
 $password = 'Hasan01!@';
 $host = 'usersrv01.cs.virginia.edu';
-$dbname = 'hm4rq';
+$dbname = 'hm4rq_project';
 
 
 /******************************/
