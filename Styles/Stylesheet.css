@@ -56,6 +56,8 @@ footer
     text-align: center;
     color: #fff;
     text-shadow: 0.1em 0.1em #333;
+    background-image: url(../Images/blue.png);
+
 }
 
 #navigation
