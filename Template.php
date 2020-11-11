@@ -21,11 +21,12 @@
             <div id="content_area">
                 <?php echo $content; ?>
             </div>
-            
+           
+           <?php /* 
             <div id="sidebar">
                 
             </div>
-            
+           */ ?> 
             <footer>
                 <p>All rights reserved</p>
             </footer>
