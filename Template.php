@@ -28,7 +28,7 @@
             </div>
            */ ?> 
             <footer>
-                <p>All rights reserved</p>
+                <p>WEEB NATION. All rights reserved 2020</p>
             </footer>
         </div>
     </body>
