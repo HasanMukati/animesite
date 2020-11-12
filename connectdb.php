@@ -19,7 +19,7 @@
 // // connecting to DB on XAMPP (local)
 // $username = 'hasan';
 // $password = 'Hasan4750';
-// $host = 'localhost:3306';
+// $host = '192.168.64.2';
 // $dbname = 'hasan';
 
 
@@ -29,7 +29,7 @@
 $username = 'hm4rq';
 $password = 'Hasan01!@';
 $host = 'usersrv01.cs.virginia.edu';
-$dbname = 'hm4rq';
+$dbname = 'hm4rq_project';
 
 
 /******************************/
