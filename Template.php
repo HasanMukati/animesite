@@ -15,6 +15,7 @@
                     <li><a href="index.php">Home</a></li>
                     <li><a href="#">Browse Anime</a></li>
                     <li><a href="#">Profile</a></li>
+                    <li><a href="register.php">Login</a></li>
                 </ul>
             </nav>
             
