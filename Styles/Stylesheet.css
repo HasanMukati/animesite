@@ -55,7 +55,7 @@ footer
     border: 3px solid #E3E3E3;
     text-align: center;
     color: #fff;
-    text-shadow: 0.1em 0.1em rgb(253, 252, 252);
+    text-shadow: 0.1em 0.1em #333;
     background-image: url(../Images/blue.jpg);
 }
 

@@ -14,8 +14,13 @@
                 <ul id="nav">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="#">Browse Anime</a></li>
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="register.php">Login</a></li>
+                    <li><a href="profile.php">Profile</a></li>
+                    <?php if(isset($_SESSION['email'])) { ?>
+                    	<li><a href="index.php?logout">Logout</a></li>
+                    <?php }else{ ?>
+	                    <li><a href="login.php">Login</a></li>
+	                <?php } ?>  
+                    
                 </ul>
             </nav>
             
