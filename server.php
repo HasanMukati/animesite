@@ -52,7 +52,7 @@
 
 			$_SESSION['email'] = $email; 
 			$_SESSION['success'] = "You are now logged in";
-			header('location: index.php');
+			header('location: profile.php');
 
 		}
 	}
@@ -77,7 +77,7 @@
 			if(mysqli_num_rows($result) == 1){
 				$_SESSION['email'] = $email;
 				$_SESSION['success'] = "You are now logged in";
-				header('location: index.php');
+				header('location: profile.php');
 			} 
 			else {
 				array_push($errors, "Email and password do not match");
@@ -90,7 +90,7 @@
 	if (isset($_GET['logout'])) {
 		session_destroy();
 		unset($_SESSION['email']);
-		header('location: Login.php');
+		header('location: login.php');
 	}
 
  ?>

@@ -2,6 +2,34 @@
 include_once('config.php');
 
 
+function delete_account($dob,$email){
+
+	if(!empty($dob) and !empty($email)){
+		delete_query("delete from user_profile where email = '$email' and DOB = '$dob'");
+		session_destroy();
+		unset($_SESSION['email']);
+		header('location: index.php');
+		exit;
+	}else{
+		session_destroy();
+		unset($_SESSION['email']);
+		
+		header('location: index.php');
+		exit;
+	
+	}
+	
+}
+function delete_query($a){
+
+$conn = mysqli_connect(constant("db_host"), constant("db_username"),constant("db_password"),constant("db_dbname"));
+if (!$conn) {
+   echo "database error";
+   exit;
+}
+$res = mysqli_query($conn,$a);
+mysqli_close($conn);
+}
 function select_query($a){
 
 $f = array();
@@ -24,6 +52,37 @@ return $f;
 
 }
 
+
+function get_profile($email){
+	$content = '';
+	if(!empty($email)){
+		$rows = select_query("select * from user_profile where email = '$email'");
+		if(!empty($rows[0])){
+			
+				$content = '<div class="container">
+<div class="leftside">
+<img src="'.$rows[0]['profilepicture'].'" width="200" height="300"/>
+</div>
+<div class="rightside">
+
+<ul>
+<li><b>First Name</b>: '.$rows[0]['firstname'].'</li>
+<li><b>Last Name</b>: '.$rows[0]['lastname'].'</li>
+<li><b>Date of Birth</b>: '.$rows[0]['DOB'].'</li>
+<li><b>Delete Account</b>: <a href="?delete='.$rows[0]['DOB'].'">Delete</a></li>
+
+
+</ul>
+</div>
+<div class="clear"></div>
+</div>
+';
+			
+		}
+	}
+	
+	return $content;
+}
 
 function get_home_page($page,$sort=''){
 
