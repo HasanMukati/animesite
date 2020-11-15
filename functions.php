@@ -74,6 +74,10 @@ function get_profile($email){
 
 </ul>
 </div>
+<div>
+	<a href="updatepassword.php">
+	<button type="submit" name="changepass" class="btn">Update Password</button>
+</div>
 <div class="clear"></div>
 </div>
 ';

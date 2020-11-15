@@ -87,6 +87,48 @@
 		}
 	}
 
+
+	if (isset($_POST['changepass'])) {
+		$email = mysqli_real_escape_string($db, $_POST['email']); //Get Email
+
+		$oldpassword = mysqli_real_escape_string($db, $_POST['password_old']);
+
+		$password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
+
+		$password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
+
+		//see if they are all filled correctly
+		if (empty($email))
+			array_push($errors, "Email is required");
+
+		if (empty($oldpassword))
+			array_push($errors, "Old password is required");
+
+		if (empty($password_1))
+			array_push($errors, "Password is required");
+
+		if ($password_1 != $password_2)
+			array_push($errors, "Passwords must match");
+
+		if (count($errors) == 0){
+			$oldpassword = md5($oldpassword);
+			$password = md5($password_1);
+			$query = "UPDATE user_profile SET password='$password' WHERE email='$email' AND password='$oldpassword'";
+			$result = mysqli_query($db, $query);
+
+			if(mysqli_affected_rows($db) == 1){
+				$_SESSION['email'] = $email;
+				$_SESSION['success'] = "You are now logged in";
+				header('location: profile.php');
+			} 
+			else {
+				array_push($errors, "Email and old password do not match");
+				header('location: updatepassword.php');
+			}
+
+		}
+	}
+
 	if (isset($_GET['logout'])) {
 		session_destroy();
 		unset($_SESSION['email']);
