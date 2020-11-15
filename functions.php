@@ -54,12 +54,18 @@ return $f;
 
 
 function get_profile($email){
+
+if(isset($_GET['watchlist']) and !empty($_GET['watchlist']) and isset($_SESSION['email']) and !empty($_SESSION['email'])){
+	add_to_watchlist($_SESSION['email'],$_GET['watchlist']);
+}
+
+
 	$content = '';
 	if(!empty($email)){
 		$rows = select_query("select * from user_profile where email = '$email'");
 		if(!empty($rows[0])){
 			
-				$content = '<div class="container">
+				$content.= '<div class="container">
 <div class="leftside">
 <img src="'.$rows[0]['profilepicture'].'" width="200" height="300"/>
 </div>
@@ -79,12 +85,100 @@ function get_profile($email){
 ';
 			
 		}
+		
+		
+$rows = select_query("select * from anime_data a INNER JOIN watchlist b on a.anime_id = b.anime_id and b.email = '$email'");
+
+
+if(!empty($rows)){
+	//echo "<h2>Your WatchList</h2><br>";
+	foreach($rows as $row){
+	
+	$li = '';
+	$li.= '<li><b>Episodes</b>: '.$row['episodes'].'</li>';
+	
+	$row['status'] = trim($row['status']); 
+	if(!empty($row['status'])){$li.= '<li><b>Status</b>: '.$row['status'].'</li>';   }
+
+	$row['duration'] = trim($row['duration']); 
+	if(!empty($row['duration'])){$li.= '<li><b>Duration</b>: '.$row['duration'].'</li>';   }
+
+	$row['rating'] = trim($row['rating']); 
+	if(!empty($row['rating'])){$li.= '<li><b>Rating</b>: '.$row['rating'].'</li>';   }
+
+	$li.= '<li><b>Score</b>: '.$row['score'].'</li>';
+
+	$row['studio'] = trim($row['studio']); 
+	if(!empty($row['studio'])){$li.= '<li><b>Studio</b>: '.$row['studio'].'</li>';   }
+
+	$row['genre'] = trim($row['genre']); 
+	if(!empty($row['genre'])){$li.= '<li><b>Genres</b>: '.$row['genre'].'</li>';   }
+	
+	$li.= '<li><b><a href="?watchlist='.$row['anime_id'].'&remove">Remove From WatchList</a></b></li>'; 
+		
+	
+	
+		$content.= '<div class="container">
+<div class="leftside">
+<img src="Images/default.jpg" width="200" height="300"/>
+</div>
+<div class="rightside">
+<h3>'.$row['title'].'</h3>
+<ul>
+'.$li.'	
+
+</ul>
+</div>
+<div class="clear"></div>
+</div>
+';
+	
 	}
 	
+		
+	}
+}	
 	return $content;
 }
 
+
+function add_to_watchlist($email,$anime_id){
+	
+	if(isset($_GET['remove'])){
+		$q = "delete from watchlist where email = '$email' and anime_id = '$anime_id'";
+		delete_query($q);
+	}else{
+		$q = "select * from watchlist where email = '$email' and anime_id = '$anime_id'";
+	$rows = select_query($q);
+	if(empty($rows)){
+		$q = "insert into watchlist set email = '$email',anime_id='$anime_id'";
+		delete_query($q);
+	}
+		
+	}
+	
+	
+}
+
 function get_home_page($page,$sort=''){
+
+if(isset($_GET['watchlist']) and !empty($_GET['watchlist']) and isset($_SESSION['email']) and !empty($_SESSION['email'])){
+	add_to_watchlist($_SESSION['email'],$_GET['watchlist']);
+}
+
+
+if(isset($_SESSION['email']) and !empty($_SESSION['email'])){
+	$watchlist_ids = array();
+	$email = $_SESSION['email'];
+	$q = "select * from watchlist where email = '$email'";
+	$rows = select_query($q);
+	if(!empty($rows)){
+		foreach($rows as $row){
+			$watchlist_ids[$row['anime_id']] = '';	
+		}
+	}
+}	
+
 
 if(is_numeric($page)){
 	$offset = ($page-1)*10;
@@ -136,7 +230,15 @@ if(!empty($rows)){
 
 	$row['genre'] = trim($row['genre']); 
 	if(!empty($row['genre'])){$li.= '<li><b>Genres</b>: '.$row['genre'].'</li>';   }
-
+	
+	if(isset($_SESSION['email']) and !empty($_SESSION['email'])){
+		if(isset($watchlist_ids[$row['anime_id']])){
+			$li.= '<li><b><a href="?page='.$page.'&sort='.$sort.'&watchlist='.$row['anime_id'].'&remove">Remove From WatchList</a></b></li>'; 
+		}else{
+			$li.= '<li><b><a href="?page='.$page.'&sort='.$sort.'&watchlist='.$row['anime_id'].'">Add To WatchList</a></b></li>'; 
+		}
+		
+	}
 	
 		$contents.= '<div class="container">
 <div class="leftside">
