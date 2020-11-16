@@ -41,6 +41,7 @@ if (!$conn) {
 
 	$res = mysqli_query($conn,$a);
 	while($row = mysqli_fetch_array($res)){
+	    
 		$f[] = $row;
 	}
 
@@ -76,11 +77,16 @@ if(isset($_GET['watchlist']) and !empty($_GET['watchlist']) and isset($_SESSION[
 <li><b>Last Name</b>: '.$rows[0]['lastname'].'</li>
 <li><b>Date of Birth</b>: '.$rows[0]['DOB'].'</li>
 <li><b>Delete Account</b>: <a href="?delete='.$rows[0]['DOB'].'">Delete</a></li>
-
+<div>
+	<a href="updatepassword.php">Update Password</a>
+</div>
+	
 
 </ul>
 </div>
+
 <div class="clear"></div>
+
 </div>
 ';
 			
@@ -197,7 +203,8 @@ if($sort == 'az'){
 
 if(!empty($sort)){
 	if($sort == 'az'){
-		$rows = select_query("select * from anime_data  ORDER BY `title` ASC limit 10 OFFSET $offset");
+		$rows = select_query("select * from anime_data ORDER BY `title` ASC limit 10 OFFSET $offset");
+		
 	}else{
 		$rows = select_query("select * from anime_data  ORDER BY `title` DESC limit 10 OFFSET $offset");
 	}
@@ -205,7 +212,6 @@ if(!empty($sort)){
 }else{
 	$rows = select_query("select * from anime_data  ORDER BY `anime_id` DESC limit 10 OFFSET $offset");
 }
-
 
 
 if(!empty($rows)){
@@ -218,7 +224,9 @@ if(!empty($rows)){
 	if(!empty($row['status'])){$li.= '<li><b>Status</b>: '.$row['status'].'</li>';   }
 
 	$row['duration'] = trim($row['duration']); 
-	if(!empty($row['duration'])){$li.= '<li><b>Duration</b>: '.$row['duration'].'</li>';   }
+	if(!empty($row['duration'])){$li.= '<li><b>Duration</b>: '.$row['duration'].'</li>';   
+	}
+	
 
 	$row['rating'] = trim($row['rating']); 
 	if(!empty($row['rating'])){$li.= '<li><b>Rating</b>: '.$row['rating'].'</li>';   }
@@ -239,6 +247,8 @@ if(!empty($rows)){
 		}
 		
 	}
+	
+	
 	
 		$contents.= '<div class="container">
 <div class="leftside">
