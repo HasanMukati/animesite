@@ -72,6 +72,7 @@ if(isset($_GET['watchlist']) and !empty($_GET['watchlist']) and isset($_SESSION[
 </div>
 <div class="rightside">
 
+
 <ul>
 <li><b>First Name</b>: '.$rows[0]['firstname'].'</li>
 <li><b>Last Name</b>: '.$rows[0]['lastname'].'</li>

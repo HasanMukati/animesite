@@ -20,6 +20,7 @@
 	                    <li><a href="login.php">Login</a></li>
 	                <?php } ?>  
                     
+
                 </ul>
             </nav>
             
@@ -33,7 +34,7 @@
             </div>
            */ ?> 
             <footer>
-                <p>WEEB NATION. All rights reserved 2020</p>
+                <p>WEEB NATION - CS4750 Project. All rights reserved 2020</p>
             </footer>
         </div>
     </body>
